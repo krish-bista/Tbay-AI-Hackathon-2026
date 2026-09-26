@@ -289,7 +289,7 @@ _LIFE_SAFETY = re.compile(
     r"drown|dead bod|bod(y|ies) (was |were |has been |have been )?(found|recovered|pulled|discovered)|"
     r"\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten|dozens?) (people |persons? |residents? )?"
     r"(are |were |confirmed |now )?(dead|killed|died|missing|unaccounted)|death toll|confirmed dead|"
-    r"missing (person|man|woman|boy|girl|child|kid|senior|elder)|swept away|washed away (a |the )?(man|woman|car|person)|"
+    r"missing (person|man|woman|boy|girl|child|kid|senior|elder)|(man|woman|person|people|child|boy|girl|senior|victim|angel|someone|resident|driver)\W+(\w+\W+){0,3}(swept|washed) away|(swept|washed) away (a |an |the |two |three )?(man|woman|person|people|child|boy|girl|senior|driver|resident)|"
     r"\btrapped\b|\bstranded\b|stuck on (the |a |their )?roof|on (the |a |their )?roof(top)? waiting|"
     r"need(s|ed)? (to be )?rescu|can'?t get out|water (is )?(rising|coming) (in|fast|into)|"
     r"\bsos\b|mayday|found dead|takes? (\w+ )?lives|lives lost|"

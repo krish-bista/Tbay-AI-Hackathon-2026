@@ -213,3 +213,18 @@ body {
   .landing-fade { transform: none; transition: opacity 0.4s ease; }
   .landing-pulse { animation: none; }
 }
+
+/* City-level report areas on the flood map (FloodMap CityAreaLayer) */
+.leaflet-tooltip.city-area-label {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #d4d4d8;
+  border-radius: 9999px;
+  box-shadow: none;
+  padding: 1px 7px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: #3f3f46;
+}
+.leaflet-tooltip.city-area-label::before {
+  display: none;
+}

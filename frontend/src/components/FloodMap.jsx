@@ -4,6 +4,9 @@ import {
   MapContainer,
   TileLayer,
   CircleMarker,
+  Circle,
+  Popup,
+  Tooltip,
   useMap,
 } from 'react-leaflet';
 import 'leaflet.markercluster';
@@ -60,6 +63,9 @@ function FitBoundsToData({ geojson, stats, datasetId }) {
   useEffect(() => {
     // Only fit bounds if we haven't already fitted for this dataset
     if (lastFittedDatasetId.current === datasetId) return;
+    // Wait for the dataset's real stats: before they load, the map may still be showing
+    // demo fallback points (Kashechewan / Thunder Bay) and would lock onto those bounds.
+    if (!datasetId || !stats) return;
 
     const isWorld = stats?.scope === 'world';
 
@@ -123,6 +129,8 @@ function ClusterLayer({ geojson, onSelectLocation }) {
       if (lat == null || lng == null) return;
 
       const p = feature.properties || {};
+      // City-level points (tweet only named the town) are drawn as a CityAreaLayer, not pins.
+      if (p.precision === 'city') return;
       const colors = getMarkerColor(p.category);
       const categoryBadge = getCategoryBadge(p.category);
       const categoryLabel = getCategoryDisplay(p.category);
@@ -188,6 +196,70 @@ function ClusterLayer({ geojson, onSelectLocation }) {
   return null;
 }
 
+/**
+ * Reports that only name a town/city (precision: "city") have no precise location.
+ * Instead of stacking hundreds of pins on the city centre, show one soft area per city
+ * with the number of reports.
+ */
+function CityAreaLayer({ features, isWorld, onSelectLocation }) {
+  const areas = useMemo(() => {
+    const byPlace = {};
+    features.forEach((f) => {
+      const p = f.properties || {};
+      if (p.precision !== 'city' || !f.geometry?.coordinates) return;
+      const [lng, lat] = f.geometry.coordinates;
+      if (lat == null || lng == null) return;
+      const key = p.place || 'City';
+      if (!byPlace[key]) byPlace[key] = { place: key, lat, lng, count: 0, critical: 0 };
+      byPlace[key].count += 1;
+      if (p.severity === 'critical') byPlace[key].critical += 1;
+    });
+    return Object.values(byPlace);
+  }, [features]);
+
+  return areas.map((a) => {
+    const radius = Math.min((isWorld ? 12000 : 3500) + Math.sqrt(a.count) * (isWorld ? 1500 : 450), isWorld ? 60000 : 16000);
+    const hasCritical = a.critical > 0;
+    return (
+      <Circle
+        key={`city-${a.place}`}
+        center={[a.lat, a.lng]}
+        radius={radius}
+        pathOptions={{
+          color: hasCritical ? '#b91c1c' : '#52525b',
+          weight: 1,
+          dashArray: '4 4',
+          fillColor: hasCritical ? '#ef4444' : '#71717a',
+          fillOpacity: 0.08,
+        }}
+      >
+        <Tooltip direction="center" permanent className="city-area-label" opacity={1}>
+          {a.count.toLocaleString()}
+        </Tooltip>
+        <Popup>
+          <div className="space-y-1.5 text-zinc-900 font-sans">
+            <div className="font-semibold text-xs border-b border-zinc-200 pb-1">{a.place}</div>
+            <p className="text-xs text-zinc-700 leading-normal m-0">
+              {a.count.toLocaleString()} report{a.count === 1 ? '' : 's'} name only this city, not a precise
+              place, so they're shown as an area rather than pins.
+              {hasCritical ? ` ${a.critical} marked critical.` : ''}
+            </p>
+            {onSelectLocation && (
+              <button
+                type="button"
+                className="text-[10px] font-mono text-zinc-700 hover:text-zinc-900 underline font-medium hover:bg-zinc-100 px-1 py-0.5 rounded cursor-pointer"
+                onClick={() => onSelectLocation(a.place)}
+              >
+                Filter feed to this location
+              </button>
+            )}
+          </div>
+        </Popup>
+      </Circle>
+    );
+  });
+}
+
 /** 100% Free, No-API-Key Light GIS Tile Configurations */
 const MAP_STYLES = {
   osm: {
@@ -239,7 +311,8 @@ export default function FloodMap({
       if (!places[place]) {
         places[place] = { lat, lng, count: 0 };
       }
-      places[place].count += 1;
+      // A tweet naming several places contributes 1/n to each, so it counts once overall.
+      places[place].count += f.properties?.weight ?? 1;
     });
     return Object.values(places);
   }, [features]);
@@ -304,7 +377,10 @@ export default function FloodMap({
             />
           ))}
 
-        {/* Clustered Feature Markers with Number Count Badges */}
+        {/* City-level reports as one soft area per city (no precise location) */}
+        <CityAreaLayer features={features} isWorld={isWorld} onSelectLocation={onSelectLocation} />
+
+        {/* Clustered Feature Markers with Number Count Badges (precise places only) */}
         <ClusterLayer geojson={geojson} onSelectLocation={onSelectLocation} />
       </MapContainer>
     </div>
