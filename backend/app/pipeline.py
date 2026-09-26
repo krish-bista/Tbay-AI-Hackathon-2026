@@ -186,7 +186,8 @@ def _geocode_all(job_id: str, ds: Dict, scope: str, max_lookups: int):
             by_name[n].append(t)
         # Tweets with their own GPS coordinates in the CSV
         if t["relevant"] and t.get("lat") is not None and t.get("lon") is not None:
-            t["locations"].append({"name": "Tweet GPS", "lat": t["lat"], "lon": t["lon"]})
+            t["locations"].append({"name": "Tweet GPS", "lat": t["lat"], "lon": t["lon"],
+                                   "precision": "gps"})
 
     names = sorted(by_name, key=lambda n: len(by_name[n]), reverse=True)
     store.update_job(job_id, stage="geocoding", places_done=0, places_total=len(names))
@@ -268,6 +269,23 @@ def _geocode_all(job_id: str, ds: Dict, scope: str, max_lookups: int):
         step(n, lookup(n, anchor, country_first=True))
 
 
+def _prefer_specific(tweets: List[Dict]):
+    """
+    Drop a tweet's city-level point when it also names a place inside that city
+    ("Mission, Calgary, AB" makes "Calgary, AB, Canada" redundant). Cuts pin-stacking
+    on city centroids without losing tweets that only name the city.
+    """
+    for t in tweets:
+        locs = t.get("locations") or []
+        if len(locs) < 2:
+            continue
+        local_names = [l["name"].lower() for l in locs if l.get("precision") in ("local", "gps")]
+        keep = [l for l in locs
+                if l.get("precision") != "city"
+                or not any(l["name"].split(",")[0].strip().lower() in n for n in local_names)]
+        t["locations"] = keep or locs
+
+
 def _run(job_id: str, dataset_id: str, name: str, tweets: List[Dict], scope: str = "auto"):
     try:
         store.update_job(job_id, status="running", stage="classifying")
@@ -286,6 +304,7 @@ def _run(job_id: str, dataset_id: str, name: str, tweets: List[Dict], scope: str
         store.update_job(job_id, dataset_ready=True)
 
         _geocode_all(job_id, ds, scope, max_lookups)
+        _prefer_specific(tweets)
 
         ds["processing"] = False
         if builtin:

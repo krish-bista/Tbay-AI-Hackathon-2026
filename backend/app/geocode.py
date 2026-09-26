@@ -106,7 +106,9 @@ def lookup_gazetteer(raw: str) -> Optional[Dict]:
     if wanted and have and not ({h.lower() for h in have} & wanted):
         return None  # "Mission, BC" is not Mission, Calgary
     lat, lon, display = hit
-    return {"name": display, "lat": lat, "lon": lon}
+    # "Calgary, AB, Canada" is a whole city; "Mission, Calgary, AB" is a local place.
+    precision = "city" if re.match(r"^[^,]+, [A-Z]{2}, Canada$", display) else "local"
+    return {"name": display, "lat": lat, "lon": lon, "precision": precision}
 
 
 def _gazetteer_hit(raw: str) -> Optional[Tuple[float, float, str]]:
@@ -262,7 +264,9 @@ def _pick(name: str, cands: List[Dict], anchor: Optional[Tuple[float, float]]) -
         # Prefer the match nearest the disaster ("Kensington" -> Calgary, not Edmonton).
         ok.sort(key=lambda c: (c["lat"] - anchor[0]) ** 2 + (c["lon"] - anchor[1]) ** 2)
     c = ok[0]
-    return {"name": c["name"], "lat": c["lat"], "lon": c["lon"]}
+    # place_rank <= 16: city/town or larger; above that: neighbourhood, street, landmark.
+    return {"name": c["name"], "lat": c["lat"], "lon": c["lon"],
+            "precision": "city" if c.get("rank", 99) <= 16 else "local"}
 
 
 def is_cached(raw: str, anchor: Optional[Tuple[float, float]], country_first: bool = True) -> bool:
