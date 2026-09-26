@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Header from './components/Header';
 import KPIStrip from './components/KPIStrip';
-import SummaryPanel from './components/SummaryPanel';
 import FloodMap from './components/FloodMap';
 import TweetFeed from './components/TweetFeed';
 import {
@@ -560,44 +559,10 @@ export default function App() {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 min-h-0 overflow-hidden flex flex-col gap-2 p-2 sm:px-4 max-w-[1920px] w-full mx-auto">
-        {/* Combined Horizontal Intelligence & KPI Strip */}
-        <div className="bg-white border border-zinc-200 rounded divide-y lg:divide-y-0 lg:divide-x divide-zinc-200 grid grid-cols-1 lg:grid-cols-12 shadow-sm shrink-0">
-          {/* Left: KPIs (4 cells) */}
-          <div className="lg:col-span-5 h-full">
-            <KPIStrip
-              total={kpiTotal}
-              relevant={kpiRelevant}
-              noise={kpiNoise}
-              withLocation={kpiWithLocation}
-              topLocations={kpiTopLocations}
-            />
-          </div>
-
-          {/* Right: Situation Summary & Hotspots & Timeline */}
-          <div className="lg:col-span-7 h-full">
-            <SummaryPanel
-              summary={summary}
-              filteredRelevantCount={displaySignal.length}
-              totalRelevantCount={kpiRelevant}
-              topLocations={kpiTopLocations}
-              byCategory={kpiByCategory}
-              onRequestSummary={handleRequestSummary}
-              isLoadingSummary={isLoadingSummary}
-              filterLocation={filterLocation}
-              setFilterLocation={handleSelectLocation}
-              filterCategory={filterCategory}
-              setFilterCategory={setFilterCategory}
-              aiActive={aiActive}
-              stats={stats}
-              timeline={timeline}
-            />
-          </div>
-        </div>
-
-        {/* Split Workspace: Map + Feed */}
-        <div className="flex-1 min-h-0 overflow-hidden grid grid-cols-12 gap-3">
-          {/* Map Panel (Left Column) */}
+      <main className="flex-1 min-h-0 overflow-hidden p-2 sm:px-4 max-w-[1920px] w-full mx-auto">
+        {/* Split Workspace: Map + Right Panel (KPIs & Tweets) */}
+        <div className="h-full min-h-0 overflow-hidden grid grid-cols-12 gap-3">
+          {/* Map Panel (Left Column - Extended upwards) */}
           <div className="col-span-12 lg:col-span-7 xl:col-span-8 h-full min-h-0 overflow-hidden flex flex-col gap-1.5">
             {/* Map Toolbar & Legend */}
             <div className="flex items-center justify-between gap-2 text-xs flex-wrap shrink-0">
@@ -664,35 +629,49 @@ export default function App() {
             </div>
           </div>
 
-          {/* Tweet Feed Panel (Right Column) */}
-          <div className="col-span-12 lg:col-span-5 xl:col-span-4 h-full min-h-0 overflow-hidden flex flex-col">
-            <TweetFeed
-              signalTweets={displaySignal}
-              noiseTweets={displayNoise}
-              signalTotal={displaySignalTotal}
-              noiseTotal={displayNoiseTotal}
-              categories={categories}
-              stats={stats}
-              useFallback={useFallback}
-              onFlyTo={handleFlyTo}
-              filterCategory={filterCategory}
-              setFilterCategory={setFilterCategory}
-              filterSearch={filterSearch}
-              setFilterSearch={setFilterSearch}
-              filterLocation={filterLocation}
-              setFilterLocation={setFilterLocation}
-              filterHasLocation={filterHasLocation}
-              setFilterHasLocation={setFilterHasLocation}
-              filterDisasterType={filterDisasterType}
-              setFilterDisasterType={setFilterDisasterType}
-              filterSort={filterSort}
-              setFilterSort={setFilterSort}
-              offset={offset}
-              setOffset={setOffset}
-              limit={limit}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-            />
+          {/* Right Column: KPIs above Tweet Feed */}
+          <div className="col-span-12 lg:col-span-5 xl:col-span-4 h-full min-h-0 overflow-hidden flex flex-col gap-2">
+            {/* KPI Strip */}
+            <div className="bg-white border border-zinc-200 rounded shadow-xs shrink-0 overflow-hidden">
+              <KPIStrip
+                total={kpiTotal}
+                relevant={kpiRelevant}
+                noise={kpiNoise}
+                withLocation={kpiWithLocation}
+                topLocations={kpiTopLocations}
+              />
+            </div>
+
+            {/* Tweet Feed Panel */}
+            <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
+              <TweetFeed
+                signalTweets={displaySignal}
+                noiseTweets={displayNoise}
+                signalTotal={displaySignalTotal}
+                noiseTotal={displayNoiseTotal}
+                categories={categories}
+                stats={stats}
+                useFallback={useFallback}
+                onFlyTo={handleFlyTo}
+                filterCategory={filterCategory}
+                setFilterCategory={setFilterCategory}
+                filterSearch={filterSearch}
+                setFilterSearch={setFilterSearch}
+                filterLocation={filterLocation}
+                setFilterLocation={setFilterLocation}
+                filterHasLocation={filterHasLocation}
+                setFilterHasLocation={setFilterHasLocation}
+                filterDisasterType={filterDisasterType}
+                setFilterDisasterType={setFilterDisasterType}
+                filterSort={filterSort}
+                setFilterSort={setFilterSort}
+                offset={offset}
+                setOffset={setOffset}
+                limit={limit}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
+            </div>
           </div>
         </div>
       </main>
