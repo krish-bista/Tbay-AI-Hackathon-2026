@@ -33,23 +33,21 @@ export default function KPIStrip({ total, relevant, noise, withLocation, topLoca
   ];
 
   return (
-    <div className="grid grid-cols-2 bg-white">
-      {metrics.map((m, idx) => (
+    <div className="grid grid-cols-4 divide-x divide-zinc-200 bg-white">
+      {metrics.map((m) => (
         <div
           key={m.label}
-          className={`p-3 sm:px-4 sm:py-3 flex flex-col justify-between min-w-0 ${
-            idx % 2 === 0 ? 'border-r border-zinc-200' : ''
-          } ${idx < 2 ? 'border-b border-zinc-200' : ''}`}
+          className="p-2 sm:px-2.5 sm:py-2.5 flex flex-col justify-between min-w-0"
         >
-          <div className="text-xs uppercase tracking-wider text-zinc-500 font-mono font-semibold leading-tight break-words">
+          <div className="text-[10px] sm:text-[11px] uppercase tracking-tight text-zinc-500 font-mono font-semibold leading-tight whitespace-normal break-words">
             {m.label}
           </div>
           <div className="mt-1 flex flex-col min-w-0">
-            <span className={`text-2xl sm:text-3xl font-bold font-mono tabular-nums ${m.valColor} leading-tight`}>
+            <span className={`text-lg sm:text-xl lg:text-2xl font-bold font-mono tabular-nums ${m.valColor} leading-tight`}>
               {m.value}
             </span>
             {m.sub && (
-              <span className="text-xs text-zinc-500 font-mono tabular-nums font-medium leading-tight mt-0.5 break-words">
+              <span className="text-[10px] sm:text-[11px] text-zinc-500 font-mono tabular-nums font-medium leading-tight mt-0.5 whitespace-normal break-words">
                 {m.sub}
               </span>
             )}

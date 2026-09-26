@@ -60,7 +60,7 @@ export default function Header({
         <div className="flex items-center justify-between gap-4">
           {/* Brand - Achelous (Clean title, no subtitle, no green dot) */}
           <div className="flex items-center gap-2 shrink-0 select-none">
-            <h1 className="text-base font-bold text-zinc-900 tracking-wider font-mono leading-none uppercase">
+            <h1 className="text-xl sm:text-2xl font-black text-zinc-900 tracking-wider font-mono leading-none uppercase">
               Achelous
             </h1>
           </div>
@@ -132,18 +132,6 @@ export default function Header({
               title="Download currently filtered tweets as CSV"
             >
               Export CSV
-            </button>
-
-            {/* Export GeoJSON */}
-            <button
-              id="btn-export-geojson"
-              type="button"
-              onClick={onExportGeoJSON}
-              disabled={!hasData}
-              className="px-3 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-              title="Download filtered ground points as GeoJSON"
-            >
-              Export Json
             </button>
           </div>
         </div>

@@ -563,7 +563,7 @@ export default function App() {
         {/* Split Workspace: Map + Right Panel (KPIs & Tweets) */}
         <div className="h-full min-h-0 overflow-hidden grid grid-cols-12 gap-3">
           {/* Map Panel (Left Column - Extended upwards) */}
-          <div className="col-span-12 lg:col-span-7 xl:col-span-8 h-full min-h-0 overflow-hidden flex flex-col gap-1.5">
+          <div className="col-span-12 lg:col-span-7 xl:col-span-7 h-full min-h-0 overflow-hidden flex flex-col gap-1.5">
             {/* Map Toolbar & Legend */}
             <div className="flex items-center justify-between gap-2 text-xs flex-wrap shrink-0">
               <div className="flex items-center gap-2">
@@ -630,7 +630,7 @@ export default function App() {
           </div>
 
           {/* Right Column: KPIs above Tweet Feed */}
-          <div className="col-span-12 lg:col-span-5 xl:col-span-4 h-full min-h-0 overflow-hidden flex flex-col gap-2">
+          <div className="col-span-12 lg:col-span-5 xl:col-span-5 h-full min-h-0 overflow-hidden flex flex-col gap-2">
             {/* KPI Strip */}
             <div className="bg-white border border-zinc-200 rounded shadow-xs shrink-0 overflow-hidden">
               <KPIStrip
