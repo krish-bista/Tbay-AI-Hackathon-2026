@@ -222,6 +222,7 @@
 }
 ],
 "aliens are gonna land, chief hansen|51.0,-114.1": [],
+"all of the missing in colorado, are now now accounted for http|any": [],
 "alluvione sardegna, gabrielli assurdo fare gratuita polemica su cosa si poteva fare|any": [],
 "alluvione sardegna, papa commosso|any": [],
 "alluvione sardegna, siddi|any": [],
@@ -300,6 +301,7 @@
 "as southeast queensland braces for strong winds and flooding, quest new|any": [],
 "as the calgary flood conditions stabilize, matrix stays busy and stays safe|51.0,-114.1": [],
 "asset fire, standing by in queensland prepared to pump water, caused from cyclone flood|any": [],
+"at lakebriar off linden, twomile creek|any": [],
 "australia queensland|51.0,-114.1": [],
 "australia queensland|any": [
 {
@@ -609,6 +611,52 @@
 "rank": 12
 }
 ],
+"boulder humane society|any": [
+{
+"cat": "amenity",
+"lat": 40.1530913,
+"lon": -105.1256913,
+"n": "Longmont Humane Society",
+"name": "Longmont Humane Society, Fairground, Boulder County",
+"rank": 30
+},
+{
+"cat": "amenity",
+"lat": 40.0224027,
+"lon": -105.2265837,
+"n": "Humane Society of Boulder Valley",
+"name": "Humane Society of Boulder Valley, 55th Street, Boulder",
+"rank": 30
+}
+],
+"boulder now|any": [
+{
+"cat": "healthcare",
+"lat": 40.1854295,
+"lon": -105.1030312,
+"n": "Chiro Now!",
+"name": "Chiro Now!, 15th Avenue, Longmont",
+"rank": 30
+},
+{
+"cat": "shop",
+"lat": 40.1734525,
+"lon": -105.1029431,
+"n": "Bella's Hair Salon, now Massage Thai",
+"name": "Bella's Hair Salon, now Massage Thai, Main Street",
+"rank": 30
+},
+{
+"cat": "amenity",
+"lat": 40.1518793,
+"lon": -105.093951,
+"n": "Bright Now! Dental",
+"name": "Bright Now! Dental, Ken Pratt Sidepath, Harvest Junction North & South",
+"rank": 30
+}
+],
+"boulder, co has received app|any": [],
+"boulder, colorado feels god|any": [],
 "boulder, colorado|any": [
 {
 "cat": "boundary",
@@ -820,6 +868,7 @@
 "rank": 20
 }
 ],
+"broken oil pipeline in weld county, co after|any": [],
 "brookside cainta, rizal|any": [
 {
 "cat": "landuse",
@@ -946,6 +995,7 @@
 }
 ],
 "bundaberg, australia, jan|any": [],
+"bundaberg, ipswich and the other towns that are copping it worse than us|any": [],
 "bundaberg, ipswich, lockyer valley and brisbane|any": [],
 "bundaberg, queensland early next week to help clean up|any": [],
 "bundaberg, queensland|any": [
@@ -975,6 +1025,24 @@
 "n": "Burnett Heads",
 "name": "Burnett Heads, Queensland, Australia",
 "rank": 18
+}
+],
+"burnett highway|any": [
+{
+"cat": "highway",
+"lat": -23.4379552,
+"lon": 150.5073313,
+"n": "Burnett Highway",
+"name": "Burnett Highway, Gracemere, Rockhampton",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": -23.4714879,
+"lon": 150.5000536,
+"n": "Burnett Highway",
+"name": "Burnett Highway, Bouldercombe, Rockhampton",
+"rank": 26
 }
 ],
 "busing volunteers to erlton, mission and elbow park|51.0,-114.1": [],
@@ -1454,6 +1522,7 @@
 "rank": 30
 }
 ],
+"central, fortitude valley and bowen hills train stations have now reopened http|any": [],
 "cgy|51.0,-114.1": [],
 "chaparral valley|51.0,-114.1": [
 {
@@ -1601,6 +1670,7 @@
 "rank": 30
 }
 ],
+"chuck russell, incident|any": [],
 "city hall|51.0,-114.1": [
 {
 "cat": "railway",
@@ -1627,6 +1697,7 @@
 "rank": 30
 }
 ],
+"classes are suspended, august|any": [],
 "climate change|51.0,-114.1": [],
 "cloverdale|51.0,-114.1": [
 {
@@ -1642,6 +1713,9 @@
 "coastal flood warning issued for perth amboy, nj http|any": [],
 "coastal flood warning issued for piscataway, nj http|any": [],
 "coastal flood warning issued for spuyten duyvil, ny http|any": [],
+"coflood boil water advisories still in place for lyons, mountain meadow|any": [],
+"coflood impact on area farms, restaurants|any": [],
+"coflood in adams, boulder, larimer|any": [],
 "colorado flooding imperils oil and gas sites, causes spill http|any": [],
 "colorado floods damage farms, oil wells, roadways http|any": [],
 "colorado floods rise, many feared dead or missing|any": [],
@@ -2609,8 +2683,44 @@
 "rank": 26
 }
 ],
+"estes park|any": [
+{
+"cat": "boundary",
+"lat": 40.3771926,
+"lon": -105.523216,
+"n": "Estes Park",
+"name": "Estes Park, Larimer County, Colorado",
+"rank": 16
+},
+{
+"cat": "boundary",
+"lat": 40.336359,
+"lon": -105.5310749,
+"n": "Estes Park",
+"name": "Estes Park, Larimer County, Colorado",
+"rank": 16
+},
+{
+"cat": "boundary",
+"lat": 40.366432,
+"lon": -105.5028549,
+"n": "Estes Park",
+"name": "Estes Park, Larimer County, Colorado",
+"rank": 16
+}
+],
 "eu, canada release aid money for phl flood victims|any": [],
 "evacuated as flash flood hits queensland, australia http|any": [],
+"evans, colo|any": [
+{
+"cat": "boundary",
+"lat": 40.3772168,
+"lon": -104.6977634,
+"n": "Evans",
+"name": "Evans, Weld County, Colorado",
+"rank": 16
+}
+],
 "ever the optimist, i see the|51.0,-114.1": [],
 "everyone is drunk and your area is flooded, how is that safe|any": [],
 "everything is going to be ok, karl stefanovic will be reporting on the floods from brisbane|any": [],
@@ -2637,6 +2747,7 @@
 "explosion at transalta plant leaves banff, lake louise residents without power http|51.0,-114.1": [],
 "extremely dangerous and life threatening situation in boulder, colorado|any": [],
 "facebook in the album qld, australia flood|any": [],
+"fakechrispyne if i have to watch our premier one more time talking to us like we are idiots, i am going to combust|any": [],
 "farmers, parks canada argue over who|51.0,-114.1": [],
 "fellow speducator, jaja vagilia|any": [],
 "ferny grove|51.0,-114.1": [],
@@ -2669,6 +2780,7 @@
 "feu, science building|any": [],
 "feu,science building|any": [],
 "filinvest, cainta, rizal as of|any": [],
+"firestone, greeley, commerce city|any": [],
 "first heatwave, then bush fires|any": [],
 "fish creek provincial park society|51.0,-114.1": [],
 "flames|51.0,-114.1": [
@@ -2763,6 +2875,48 @@
 "for those who wish to contribute to the flood relief in queensland, vinnies has a qld flood appeal|any": [],
 "for those who wish to contribute to the flood relief in queensland, vinnies has a queensland flood appeal|any": [],
 "fort mcmurray|51.0,-114.1": [],
+"fourmile creek|any": [
+{
+"cat": "waterway",
+"lat": 29.6560541,
+"lon": -98.1723026,
+"n": "Fourmile Creek",
+"name": "Fourmile Creek, Solms, New Braunfels",
+"rank": 18
+},
+{
+"cat": "waterway",
+"lat": 33.3339686,
+"lon": -93.9795114,
+"n": "Fourmile Creek",
+"name": "Fourmile Creek, Miller County, Arkansas",
+"rank": 18
+},
+{
+"cat": "waterway",
+"lat": 37.6476621,
+"lon": -97.083883,
+"n": "Fourmile Creek",
+"name": "Fourmile Creek, Andover, Butler County",
+"rank": 18
+},
+{
+"cat": "waterway",
+"lat": 30.2280603,
+"lon": -96.6589389,
+"n": "Fourmile Creek",
+"name": "Fourmile Creek, Washington County, Texas",
+"rank": 18
+},
+{
+"cat": "waterway",
+"lat": 35.0752346,
+"lon": -80.836807,
+"n": "Fourmile Creek",
+"name": "Fourmile Creek, Charlotte, Mecklenburg County",
+"rank": 19
+}
+],
 "france|51.0,-114.1": [
 {
 "cat": "boundary",
@@ -2886,6 +3040,7 @@
 ],
 "get out now, bremmer river to peak in next hour|any": [],
 "gillard should be removed from queensland, it|any": [],
+"girl, i love how you do me|any": [],
 "gis layers, inundation maps http|any": [],
 "glacier view|51.0,-114.1": [
 {
@@ -2965,6 +3120,32 @@
 "rank": 30
 }
 ],
+"gol hill|any": [
+{
+"cat": "highway",
+"lat": 28.6266025,
+"lon": 77.2072172,
+"n": "Gol Dakkhana Roundabout",
+"name": "Gol Dakkhana Roundabout, Ashok Place, Raisina Hill",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 28.6275896,
+"lon": 77.2065691,
+"n": "Gol Dakkhana Roundabout",
+"name": "Gol Dakkhana Roundabout, Ashok Place, Connaught Place",
+"rank": 26
+},
+{
+"cat": "amenity",
+"lat": 28.6269621,
+"lon": 77.2066496,
+"n": "Gol Post Office (GPO)",
+"name": "Gol Post Office (GPO), Gol Dakkhana Roundabout, Ashok Place",
+"rank": 30
+}
+],
 "goldbar|51.0,-114.1": [
 {
 "cat": "highway",
@@ -3004,6 +3185,7 @@
 ],
 "government of alberta, canada pledges|51.0,-114.1": [],
 "great idea|51.0,-114.1": [],
+"greens, champion greens and the valley neighborhood|any": [],
 "guam, ut, az|any": [],
 "gujab, pinas|any": [],
 "hamza|51.0,-114.1": [],
@@ -3090,6 +3272,7 @@
 }
 ],
 "hell or high water, calgary stampede|51.0,-114.1": [],
+"help jonathan, cailey|any": [],
 "heritage heights|51.0,-114.1": [
 {
 "cat": "boundary",
@@ -3234,9 +3417,11 @@
 "hyundai, mazda and ford offering support to victims of colorado flooding|any": [],
 "i hope all is well, dc|any": [],
 "i know, i know|51.0,-114.1": [],
+"i live in holiday neighborhood, yarmouth and|any": [],
 "if anyone had some time and energy, jill and i could use a few hands to help muck out our basement|51.0,-114.1": [],
 "if co, ca, az wildfires bother you|51.0,-114.1": [],
 "if you are stranded and near sm malls, sm malls to serve as shelter for flood victims|any": [],
+"ilang beses ng may tumitirik na motor dito, ga|any": [],
 "in light of colorado floods, new epa report reveals importance of wetlands and streams http|any": [],
 "in need of rescue teams sa palanza street, brgy|any": [],
 "india|51.0,-114.1": [
@@ -3621,6 +3806,8 @@
 "rank": 30
 }
 ],
+"lost blue burmese cat, glass house mountains qld|any": [],
+"lost blue burmese cat, glass house mountains|any": [],
 "lost dog|51.0,-114.1": [
 {
 "cat": "highway",
@@ -3757,6 +3944,7 @@
 "rank": 30
 }
 ],
+"loveland, boulder, longmont|any": [],
 "lpac criminal negligence causes queensland, australia flood crisis|any": [],
 "lucia, pasig|any": [
 {
@@ -3800,6 +3988,7 @@
 "rank": 25
 }
 ],
+"luneta, roxas blvd http|any": [],
 "lyons, colo|any": [
 {
 "cat": "boundary",
@@ -3882,6 +4071,7 @@
 "rank": 24
 }
 ],
+"mariah carey, we cant make it through the rain|any": [],
 "mariano marcos, bgy|any": [
 {
 "cat": "highway",
@@ -3963,6 +4153,7 @@
 }
 ],
 "massive floods hit queensland, new so|any": [],
+"matamaanka asap rescue in villa monteverde, brgy|any": [],
 "mayamot, antipolo rizal needs rescue|any": [],
 "maysilo, malabon|any": [
 {
@@ -4307,6 +4498,24 @@
 "rank": 24
 }
 ],
+"moffat tunnel|any": [
+{
+"cat": "tunnel",
+"lat": 39.8947161,
+"lon": -105.7044631,
+"n": "Moffat Tunnel",
+"name": "Moffat Tunnel, Trestle, Grand County",
+"rank": 30
+},
+{
+"cat": "railway",
+"lat": 41.8445111,
+"lon": -73.0589178,
+"n": "Moffat Tunnel",
+"name": "Moffat Tunnel, Richards Road, Bakersville",
+"rank": 30
+}
+],
 "montalban rizal, flood waters rising fast po|any": [],
 "montreal|51.0,-114.1": [
 {
@@ -4479,6 +4688,16 @@
 }
 ],
 "my home town calgary, ab is flooding|51.0,-114.1": [],
+"nagbalon marilao, bulacan|any": [
+{
+"cat": "boundary",
+"lat": 14.7503707,
+"lon": 120.9508262,
+"n": "Nagbalon",
+"name": "Nagbalon, Marilao, Bulacan",
+"rank": 20
+}
+],
 "nanaimo|51.0,-114.1": [],
 "nanton|51.0,-114.1": [
 {
@@ -4634,6 +4853,7 @@
 "rank": 26
 }
 ],
+"oh lord, i pray for those lives are in danger|any": [],
 "oklahoma city|51.0,-114.1": [],
 "oklahoma city|any": [
 {
@@ -4754,6 +4974,24 @@
 "our hearts and prayers go out to everyone affected this week by the boston attacks, texas factory explosion|any": [],
 "our love and thoughts go out to those affected by the severe flooding in|51.0,-114.1": [],
 "our thoughts are with all residents of flood affected areas of nsw, victoria and queensland today|any": [],
+"pablo ocampo, malate|any": [
+{
+"cat": "highway",
+"lat": 14.5605505,
+"lon": 120.9908735,
+"n": "Pablo Ocampo Street",
+"name": "Pablo Ocampo Street, Barangay 726, Barangay 708",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 14.5634163,
+"lon": 120.9969409,
+"n": "Pablo Ocampo Street",
+"name": "Pablo Ocampo Street, Barangay 728, Malate",
+"rank": 26
+}
+],
 "palm springs|51.0,-114.1": [],
 "particularly around the brisbane river, gladstone|any": [],
 "paula newton reports on the devastating flooding in calgary, alber|51.0,-114.1": [],
@@ -4857,6 +5095,7 @@
 "phew, queensland can relax|any": [],
 "photo of the flood in manila, philippines|any": [],
 "pic from ingham, queensland http|any": [],
+"pimco i live in boulder, colorado|any": [],
 "pinalagad, malinta val|any": [],
 "pincher creek|51.0,-114.1": [
 {
@@ -5260,6 +5499,7 @@
 "rank": 12
 }
 ],
+"quezon city, san mateo, montalban and nearby areas|any": [],
 "rains flood manila area, sending thousands fleeing|any": [],
 "red cross teams are on the ground in siksika, morley and eden valley|51.0,-114.1": [],
 "red deer river, drumheller now expected to crest at|51.0,-114.1": [],
@@ -5466,6 +5706,7 @@
 "rank": 30
 }
 ],
+"rolling rock with darren, tommy|51.0,-114.1": [],
 "rosa, laguna kailangan po ng tulong|any": [],
 "rosie goodmorning ro, i live in|51.0,-114.1": [],
 "roughly a month ago, calgary had a fire ban because it was so dry|51.0,-114.1": [],
@@ -6039,6 +6280,32 @@
 ],
 "southern alberta caused|51.0,-114.1": [],
 "spirit of albertans during floods is what makes canada great, pm says|51.0,-114.1": [],
+"st loveland, co|any": [
+{
+"cat": "shop",
+"lat": 40.3974025,
+"lon": -105.0743249,
+"n": "Lo Co Artisan Coffee House",
+"name": "Lo Co Artisan Coffee House, East 6th Street, Loveland",
+"rank": 30
+},
+{
+"cat": "craft",
+"lat": 40.3966577,
+"lon": -105.0752619,
+"n": "Oak and Maple (Whisky and Waffle Co.)",
+"name": "Oak and Maple (Whisky and Waffle Co.), East 5th Street, Loveland",
+"rank": 30
+},
+{
+"cat": "building",
+"lat": 40.3935061,
+"lon": -105.0458334,
+"n": "Larimer County Building",
+"name": "Larimer County Building, East 1st Street, Loveland",
+"rank": 30
+}
+],
 "stampede ground|51.0,-114.1": [],
 "stanley park|51.0,-114.1": [
 {
@@ -6139,6 +6406,48 @@
 "n": "Collegio Sto. Domingo",
 "name": "Collegio Sto. Domingo, Sunset Drive, Cainta",
 "rank": 30
+}
+],
+"stone canyon rd|any": [
+{
+"cat": "highway",
+"lat": 34.09489,
+"lon": -118.4490111,
+"n": "Stone Canyon Road",
+"name": "Stone Canyon Road, Bel Air, Westwood",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 33.0041041,
+"lon": -117.0586982,
+"n": "Stone Canyon Road",
+"name": "Stone Canyon Road, San Diego, San Diego County",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 33.0035915,
+"lon": -117.0529028,
+"n": "Stone Canyon Road",
+"name": "Stone Canyon Road, Ladera Piedra, Poway",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 32.8953473,
+"lon": -96.7738415,
+"n": "Stone Canyon Road",
+"name": "Stone Canyon Road, Gifford, Dallas",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 32.8860026,
+"lon": -96.7751031,
+"n": "Stone Canyon Road",
+"name": "Stone Canyon Road, Dallas, Dallas County",
+"rank": 26
 }
 ],
 "stone harbor, new jersey|any": [
@@ -6246,6 +6555,7 @@
 }
 ],
 "texas explosion,midwest flooding|any": [],
+"thank you, colorado|any": [],
 "thanks for being awesome, nenshi|51.0,-114.1": [],
 "the calgary|51.0,-114.1": [
 {
@@ -6318,6 +6628,48 @@
 "to everyone in queensland right now going through the floods and cyclones,i hope you|any": [],
 "toddler airlifted to safety amid flood deluge in queensland, australia|any": [],
 "tony igcalinos, cainta rescue|any": [],
+"torwood st|any": [
+{
+"cat": "highway",
+"lat": -33.9855622,
+"lon": 151.1339003,
+"n": "Torwood Street",
+"name": "Torwood Street, Sans Souci, St George",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": -33.9858253,
+"lon": 151.1358144,
+"n": "Torwood Street",
+"name": "Torwood Street, Ramsgate, St George",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": -33.7165121,
+"lon": 150.5952767,
+"n": "Torwood Street",
+"name": "Torwood Street, Sydney, New South Wales",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": -27.4695884,
+"lon": 152.9988047,
+"n": "Torwood Street",
+"name": "Torwood Street, Auchenflower, Brisbane",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 41.731367,
+"lon": -72.6904687,
+"n": "Torwood Street",
+"name": "Torwood Street, South End, Hartford",
+"rank": 26
+}
+],
 "trains downtown monday, june|51.0,-114.1": [],
 "travelers|51.0,-114.1": [
 {
@@ -6616,6 +6968,7 @@
 }
 ],
 "watch the queensland flood, monday|any": [],
+"wayne, alberta http|51.0,-114.1": [],
 "we are now accepting donations for morley, siksika and tsuu t|51.0,-114.1": [],
 "weather floods italian island, killing|any": [],
 "weld county|51.0,-114.1": [],

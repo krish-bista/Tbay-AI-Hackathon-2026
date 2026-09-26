@@ -41,17 +41,19 @@ FLOOD_RELEVANCE_PATTERNS = [
     r'\b(banjir|inondation|inondations|inondé|inonde|submergé|submerge|inundación|inundacion|inundaciones|anegado|hochwasser|überschwemmung|ueberschwemmung|alluvione|enchente|alagamento|洪水)\b',
     r'\b(sandbag|sandbags|sandbagging|dike|levee|dam\s+overflow|overflowing)\b',
     r'#(abflood|mbflood|skflood|onflood|qcflood|bcflood|yycflood|yccflood|calgaryflood|highriverflood|qldflood|rescueph|flood|floods|flooding|inondation|inundacion|hochwasser|banjir)\b',
+    # Any hashtag containing "flood" (#qldfloods, #coflood, #floodph, #boulderflood) and #bigwet
+    r'#\w*flood\w*|#bigwet',
 ]
 
 # Non-flood disaster patterns for disaster_type classification
 DISASTER_TYPE_PATTERNS = {
-    "explosion": r'\b(explosion|explosions|explode|exploded|bomb|bombs|bombing|blast|blasts|detonation|ied)\b',
-    "wildfire": r'\b(wildfire|wildfires|bushfire|bushfires|forest\s+fire|fire|fires|blaze|flames)\b',
+    "explosion": r'\b(explosion|explosions|explode|exploded|bomb|bombs|bombing|blast|blasts|detonation|ied)\b|#(prayforboston|bostonmarathon|bostonstrong|westtx|westexplosion)\b',
+    "wildfire": r'\b(wildfire|wildfires|bushfire|bushfires|forest\s+fire|fire|fires|blaze|flames)\b|#\w*fires?\b',
     "earthquake": r'\b(earthquake|earthquakes|quake|quakes|tsunami|aftershock|seismic)\b',
     "storm": r'\b(hurricane|typhoon|cyclone|tornado|tornadoes|twister|storm|blizzard|gale)\b',
     "shooting": r'\b(shooting|shootings|gunman|active\s+shooter|gunfire|shot\s+dead|massacre)\b',
     "transport_accident": r'\b(derail|derailment|train\s+crash|plane\s+crash|air\s+crash|shipwreck|car\s+crash|collision|flight\s+crash)\b',
-    "haze": r'\b(haze|smog|choking\s+smoke|air\s+pollution)\b',
+    "haze": r'\b(haze|smog|choking\s+smoke|air\s+pollution)\b|#\w*haze\b',
 }
 
 # Sarcasm / Casual / Non-disaster filters
@@ -280,7 +282,24 @@ def analyze_tweet_nlp(tweet_text: str) -> Dict[str, Any]:
     # 5. Category Classification (for relevant flood tweets)
     category = "general_concern"
 
-    if re.search(r'\b(trapped|rescue|help us|sos|need help|needs help|please help|missing|secours)\b', text_lower):
+    # A request for help, not any mention of "rescue": "rescue team", "Fire & Rescue",
+    # "wildlife rescue", "to the rescue" and "rescued" describe responders, not a person in danger.
+    strong_request = re.search(
+        r"\b(trapped|stranded|sos|send help|need(s|ed)? (a )?rescu\w*|please rescue|rescue (me|us|them|needed)|"
+        r"can'?t get out|missing (person|people|man|woman|child|children|boy|girl|senior|elder)|secours)\b|#rescueph",
+        text_lower)
+    # "Please help" in an appeal (donate, drop off supplies, RT, clean-up, stolen items) is
+    # a relief request, not a person in danger.
+    weak_request = re.search(r"\b(need help|needs help|please help|help needed)\b", text_lower)
+    appeal = re.search(r"donat|drop.?off|supplies|\brt\b|retweet|clean.?up|volunteer|stolen|"
+                       r"businesses|services|fundrais|red ?cross|union|spread the word|"
+                       # offers of help, not requests: "Need help? Get in touch", "DM if you need help"
+                       r"need help\?|if you (need|have)|\bdm\b|get in touch|come on down|offering|#\w*helps\b",
+                       text_lower)
+    urgent_request = strong_request or (weak_request and not appeal)
+    animals_only = (re.search(r'\b(animals?|pets?|dogs?|cats?|horses?|cattle|livestock|wildlife|zoo)\b', text_lower)
+                    and not re.search(r'\b(people|person|residents?|family|families|child|children|kids?|man|woman|elderly|senior)\b', text_lower))
+    if urgent_request and not animals_only:
         category = "request_for_help"
     elif re.search(r'\b(doctor|hospital|injured|ambulance|medical|blood|triage|blessé)\b', text_lower):
         category = "medical_need"
@@ -300,7 +319,10 @@ def analyze_tweet_nlp(tweet_text: str) -> Dict[str, Any]:
     # 6. Severity Classification
     severity = "medium"
 
-    if category == "request_for_help" or re.search(r'\b(trapped|drowning|life threatening|missing person|critical|injured|emergency call)\b', text_lower):
+    hyperbole = re.search(r'drowning in (work|homework|school|debt|tears|emails?|paper(work)?|love|assignments)', text_lower)
+    if (category == "request_for_help"
+            or (re.search(r'\b(trapped|drowning|life threatening|missing person|injured|emergency call)\b', text_lower)
+                and not animals_only and not hyperbole)):
         severity = "critical"
     elif category == "evacuation" or re.search(r'\b(without power|30,000|displace|home flooded|homes under water|under water|no clean water|impassable|major damage|mandatory)\b', text_lower):
         severity = "high"
