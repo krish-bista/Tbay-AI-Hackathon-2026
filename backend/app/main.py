@@ -203,6 +203,15 @@ def list_datasets():
     return {"default_id": DEFAULT_DATASET_ID, "datasets": store.list_datasets()}
 
 
+@app.delete("/api/datasets/{dataset_id}")
+def delete_dataset(dataset_id: str):
+    """Delete a dataset from memory and disk."""
+    if not store.delete_dataset(dataset_id):
+        raise HTTPException(404, "Dataset not found")
+    return {"status": "deleted", "dataset_id": dataset_id}
+
+
+
 @app.get("/api/jobs/{job_id}")
 def get_job(job_id: str):
     job = store.jobs.get(job_id)

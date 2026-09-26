@@ -222,6 +222,9 @@ export async function fetchSummary(datasetId, filters = {}) {
 /**
  * Build a downloadable GeoJSON blob from a FeatureCollection object.
  */
+/**
+ * Build a downloadable GeoJSON blob from a FeatureCollection object.
+ */
 export function downloadGeoJSON(featureCollection, filename = 'living_flood_map_export.geojson') {
   const blob = new Blob([JSON.stringify(featureCollection, null, 2)], {
     type: 'application/geo+json',
@@ -235,3 +238,17 @@ export function downloadGeoJSON(featureCollection, filename = 'living_flood_map_
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+/**
+ * Delete a dataset from backend storage.
+ */
+export async function deleteDataset(datasetId) {
+  try {
+    return await request(`/api/datasets/${datasetId}`, { method: 'DELETE' });
+  } catch (err) {
+    console.warn(`Could not delete dataset ${datasetId} on backend:`, err);
+    return null;
+  }
+}
+
+

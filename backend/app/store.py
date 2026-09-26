@@ -78,3 +78,16 @@ def find_job_for_dataset(dataset_id: str) -> Optional[Dict]:
         if j["dataset_id"] == dataset_id and j["status"] in ("queued", "running"):
             return j
     return None
+
+
+def delete_dataset(dataset_id: str) -> bool:
+    with _lock:
+        removed = datasets.pop(dataset_id, None)
+        path = DATASETS_DIR / f"{dataset_id}.json"
+        if path.exists():
+            try:
+                path.unlink()
+            except OSError:
+                pass
+        return removed is not None
+

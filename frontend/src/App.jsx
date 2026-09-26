@@ -17,6 +17,7 @@ import {
   fetchSummary,
   uploadAndWait,
   downloadGeoJSON,
+  deleteDataset,
 } from './api';
 import { FALLBACK_TWEETS, FALLBACK_SUMMARY } from './data/fallbackData';
 import { Loader2 } from 'lucide-react';
@@ -35,6 +36,7 @@ export default function App() {
   // ── Active dataset ──
   const [datasetId, setDatasetId] = useState(SAMPLE_DATASET_ID);
   const [datasets, setDatasets] = useState([]);
+  const [removedDatasetIds, setRemovedDatasetIds] = useState(new Set());
   const [dataSource, setDataSource] = useState('fallback'); // 'backend' | 'upload' | 'fallback'
 
   // ── Data from backend ──
@@ -198,6 +200,40 @@ export default function App() {
       setIsLoading(false);
     }
   }, [resetFilters, showToast]);
+
+  // ── Remove a dataset from dropdown ──
+  const handleRemoveDataset = useCallback(async (idToRemove) => {
+    if (!idToRemove) return;
+    const confirmDelete = window.confirm(`Remove dataset "${idToRemove}" from the dropdown?`);
+    if (!confirmDelete) return;
+
+    deleteDataset(idToRemove);
+
+    setDatasets((prev) => prev.filter((d) => d.id !== idToRemove));
+    setRemovedDatasetIds((prev) => {
+      const updated = new Set(prev);
+      updated.add(idToRemove);
+      return updated;
+    });
+
+    const remainingBuiltins = ['sample', 'bonus'].filter((id) => id !== idToRemove && !removedDatasetIds.has(id));
+    const remainingUploads = datasets.filter((d) => d.id !== idToRemove && !removedDatasetIds.has(d.id));
+    const nextId = remainingBuiltins[0] || remainingUploads[0]?.id;
+
+    if (nextId) {
+      await loadDataset(nextId, 'backend');
+    } else {
+      setUseFallback(true);
+      setDatasetId('');
+      setDataSource('fallback');
+      setStats(null);
+      setSignalTweets([]);
+      setNoiseTweets([]);
+      setGeojson(null);
+    }
+
+    showToast({ type: 'info', text: `Dataset "${idToRemove}" removed from dropdown.` });
+  }, [datasets, removedDatasetIds, loadDataset, showToast]);
 
   // ── Startup: check backend health, AI status, and list datasets ──
   useEffect(() => {
@@ -463,7 +499,9 @@ export default function App() {
       <Header
         datasetId={datasetId}
         datasets={datasets}
+        removedDatasetIds={removedDatasetIds}
         onSelectDataset={(newId) => loadDataset(newId, 'backend')}
+        onRemoveDataset={handleRemoveDataset}
         onUploadCSV={handleUploadCSV}
         onExportCSV={handleExportCSV}
         onExportGeoJSON={handleExportGeoJSON}
@@ -523,27 +561,6 @@ export default function App() {
 
       {/* Main Content */}
       <main className="flex-1 min-h-0 overflow-hidden flex flex-col gap-2 p-2 sm:px-4 max-w-[1920px] w-full mx-auto">
-        {/* Data Source & Status Banner */}
-        <div className="rounded border border-zinc-200 bg-white px-3 py-1 flex items-center justify-between text-[11px] font-mono tabular-nums text-zinc-500 shrink-0">
-          <span className="flex items-center gap-2">
-            <span>
-              Data Source:{' '}
-              <strong className="text-zinc-800 font-semibold">
-                {dataSource === 'backend'
-                  ? `Backend API (Dataset: ${datasetId})`
-                  : dataSource === 'upload'
-                  ? `Custom CSV (Dataset: ${datasetId})`
-                  : 'Built-in Demo Dataset (First Nations Emergency Reports)'}
-              </strong>
-            </span>
-            {stats?.processing && (
-              <span className="text-amber-600 animate-pulse font-semibold ml-2">
-                ● Geocoding live: {stats.with_location ?? 0} places mapped...
-              </span>
-            )}
-          </span>
-        </div>
-
         {/* Combined Horizontal Intelligence & KPI Strip */}
         <div className="bg-white border border-zinc-200 rounded divide-y lg:divide-y-0 lg:divide-x divide-zinc-200 grid grid-cols-1 lg:grid-cols-12 shadow-sm shrink-0">
           {/* Left: KPIs (4 cells) */}
