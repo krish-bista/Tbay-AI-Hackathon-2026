@@ -15,6 +15,7 @@ from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel
 
 from . import ai, pipeline, store
@@ -363,6 +364,20 @@ def get_summary(dataset_id: str, filters: FilterParams):
     return {"summary": summary, "tweet_count": len(rows)}
 
 
+class SPAStaticFiles(StaticFiles):
+    """Serve index.html for unknown non-API paths so client routes (/map) survive refreshes."""
+
+    async def get_response(self, path, scope):
+        try:
+            return await super().get_response(path, scope)
+        except StarletteHTTPException as e:
+            # Client routes only: never mask missing API calls or asset files.
+            last = path.rsplit("/", 1)[-1]
+            if e.status_code == 404 and not path.startswith("api") and "." not in last:
+                return await super().get_response("index.html", scope)
+            raise
+
+
 # Serve the built frontend at "/" (must be registered after the API routes).
 if FRONTEND_DIST.is_dir():
-    app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
+    app.mount("/", SPAStaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
