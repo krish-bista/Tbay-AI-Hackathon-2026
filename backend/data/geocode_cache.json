@@ -2692,6 +2692,7 @@
 ],
 "for those who wish to contribute to the flood relief in queensland, vinnies has a qld flood appeal|any": [],
 "for those who wish to contribute to the flood relief in queensland, vinnies has a queensland flood appeal|any": [],
+"fort mcmurray|51.0,-114.1": [],
 "france|51.0,-114.1": [
 {
 "cat": "boundary",
@@ -3113,6 +3114,7 @@
 "homes of millions could face flooding, national hurricane center says http|any": [],
 "house crashing|51.0,-114.1": [],
 "house hippo|51.0,-114.1": [],
+"houston, texas, usa|51.0,-114.1": [],
 "ht jason, trent|51.0,-114.1": [],
 "hurricane sandy destroys seaside heights, floods new york and leaves millions without power http|any": [],
 "hurricane sandy, obama declares|any": [],
@@ -4398,6 +4400,24 @@
 "rank": 8
 }
 ],
+"new york, usa|51.0,-114.1": [
+{
+"cat": "highway",
+"lat": 48.5891731,
+"lon": -109.2344501,
+"n": "New York Street",
+"name": "New York Street, Chinook, Blaine County",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 48.596507,
+"lon": -109.2331367,
+"n": "New York Street North",
+"name": "New York Street North, Chinook, Blaine County",
+"rank": 26
+}
+],
 "new zealand|51.0,-114.1": [],
 "new zealand|any": [
 {
@@ -5081,6 +5101,7 @@
 }
 ],
 "queensland, australia http|any": [],
+"queensland, australia|51.0,-114.1": [],
 "queensland, brisbane|any": [
 {
 "cat": "place",
@@ -5789,6 +5810,7 @@
 "sincerely, paula|51.0,-114.1": [],
 "siska first nation|51.0,-114.1": [],
 "siska first nation|any": [],
+"siska|51.0,-114.1": [],
 "snow in africa, drought in america, flood in manila|any": [],
 "snow in africa, drought in america, massive floods in manila|any": [],
 "snow in africa, drought in usa, flood in manila|any": [],
