@@ -680,10 +680,6 @@ export default function App() {
       <footer className="border-t border-zinc-200 bg-white py-1.5 px-4 text-xs text-zinc-500 font-mono tabular-nums shrink-0">
         <div className="max-w-[1920px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-1">
           <p>&copy; 2026 CE Strategies &bull; ThunderBay AI Emergency Intelligence</p>
-          <p className="flex items-center gap-1.5 text-zinc-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block" />
-            React + Leaflet Cluster + Recharts Engine
-          </p>
         </div>
       </footer>
     </div>
