@@ -294,6 +294,11 @@ def detect_scope(points: List[Tuple[float, float, int]], min_points: int = 5,
     return "regional" if near / total >= regional_share else "world"
 
 
+def in_region(place: Dict, anchor: Tuple[float, float]) -> bool:
+    """Inside the regional search box around the anchor."""
+    return abs(place["lat"] - anchor[0]) <= BOX_LAT and abs(place["lon"] - anchor[1]) <= BOX_LON
+
+
 def weighted_anchor(points: List[Tuple[float, float, int]]) -> Optional[Tuple[float, float]]:
     """Mention-weighted median of (lat, lon, weight) — robust to a few far-off outliers."""
     if not points:
