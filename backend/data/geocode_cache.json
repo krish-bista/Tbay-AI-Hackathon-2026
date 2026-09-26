@@ -2333,6 +2333,58 @@
 "economic losses|51.0,-114.1": [],
 "economic losses|any": [],
 "economic tally|51.0,-114.1": [],
+"edmonton trail ne|51.0,-114.1": [
+{
+"cat": "highway",
+"lat": 51.0940033,
+"lon": -114.0535544,
+"n": "Edmonton Trail NE",
+"name": "Edmonton Trail NE, Greenview Industrial, Calgary",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 51.0934459,
+"lon": -114.0533375,
+"n": "Edmonton Trail NE",
+"name": "Edmonton Trail NE, Greenview, Calgary",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 51.0904927,
+"lon": -114.0524059,
+"n": "Edmonton Trail NE",
+"name": "Edmonton Trail NE, Greenview Industrial, Calgary",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 51.0909537,
+"lon": -114.0525992,
+"n": "Edmonton Trail NE",
+"name": "Edmonton Trail NE, Greenview, Calgary",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 51.0626413,
+"lon": -114.0558368,
+"n": "Edmonton Trail NE",
+"name": "Edmonton Trail NE, Crescent Heights, Calgary",
+"rank": 26
+}
+],
+"edmonton trail|51.0,-114.1": [
+{
+"cat": "highway",
+"lat": 52.1354469,
+"lon": -113.8727139,
+"n": "Edmonton Trail",
+"name": "Edmonton Trail, Penhold, Town of Penhold",
+"rank": 26
+}
+],
 "elbow park|51.0,-114.1": [
 {
 "cat": "boundary",
@@ -2469,6 +2521,24 @@
 }
 ],
 "epic flooding in calgary, by the numbers http|51.0,-114.1": [],
+"erlton ave sw|51.0,-114.1": [
+{
+"cat": "highway",
+"lat": 51.0304535,
+"lon": -114.0618215,
+"n": "EB 25 AV SW @ Erlton ST SW",
+"name": "EB 25 AV SW @ Erlton ST SW, 25 Avenue SW, Erlton",
+"rank": 30
+},
+{
+"cat": "highway",
+"lat": 51.0305778,
+"lon": -114.0617566,
+"n": "WB 25 AV SW @ Erlton RD",
+"name": "WB 25 AV SW @ Erlton RD, 25 Avenue SW, Erlton",
+"rank": 30
+}
+],
 "erlton|51.0,-114.1": [
 {
 "cat": "boundary",
@@ -4158,6 +4228,40 @@
 }
 ],
 "misericordie pronte a partire da toscana, lazio e umbria http|any": [],
+"mission road|51.0,-114.1": [
+{
+"cat": "highway",
+"lat": 49.5590878,
+"lon": -115.7542378,
+"n": "Mission Road",
+"name": "Mission Road, Area C (Moyie/Bull River), Regional District of East Kootenay",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 49.5877262,
+"lon": -115.7534452,
+"n": "Mission Road",
+"name": "Mission Road, Area C (Moyie/Bull River), Regional District of East Kootenay",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 49.5836563,
+"lon": -115.7549974,
+"n": "Mission Road",
+"name": "Mission Road, Area C (Moyie/Bull River), Regional District of East Kootenay",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 49.5898288,
+"lon": -115.7515126,
+"n": "Mission Road",
+"name": "Mission Road, British Columbia, Canada",
+"rank": 26
+}
+],
 "mission safeway|51.0,-114.1": [],
 "mission safeway|any": [
 {
@@ -5069,6 +5173,32 @@
 "rank": 8
 }
 ],
+"queensland dr se|51.0,-114.1": [
+{
+"cat": "highway",
+"lat": 50.9392213,
+"lon": -114.0183191,
+"n": "Queensland Drive SE",
+"name": "Queensland Drive SE, Queensland, Calgary",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 50.9361334,
+"lon": -114.0287532,
+"n": "Queensland Drive SE",
+"name": "Queensland Drive SE, Queensland, Calgary",
+"rank": 26
+},
+{
+"cat": "highway",
+"lat": 50.9322175,
+"lon": -114.0175672,
+"n": "Queensland Drive SE",
+"name": "Queensland Drive SE, Queensland, Calgary",
+"rank": 26
+}
+],
 "queensland flood advice, chc wants meaningful plan, sleep study and much more|any": [],
 "queensland flood assistance, january|any": [],
 "queensland liquor|51.0,-114.1": [
@@ -5176,6 +5306,8 @@
 }
 ],
 "red hook, brooklyn http|any": [],
+"red river flooding in winnipeg, st|51.4,-97.4": [],
+"red river flooding in winnipeg, st|any": [],
 "red rocks amphitheatre|51.0,-114.1": [],
 "red rocks amphitheatre|any": [
 {

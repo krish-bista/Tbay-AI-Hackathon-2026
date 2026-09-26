@@ -267,8 +267,107 @@ def _apply_flood_policy(result: Dict, text: str, given_type: Optional[str]) -> D
                       reasoning=f"About a {dtype.replace('_', ' ')}, not flooding.")
     if result["relevant"]:
         dtype = "flood"
+        _apply_safety_rules(result, text)
     result["disaster_type"] = dtype
     return result
+
+
+# ---------------------------------------------------------------------------
+# Safety layer: deterministic corrections applied to Gemini AND rule-engine output.
+# For an operations room, under-ranking a death or trapped person is the worst error,
+# so these rules only ever escalate life-safety signals, and only de-escalate
+# rescue/evacuation labels when the text clearly doesn't support them.
+# ---------------------------------------------------------------------------
+
+_SEV_RANK = {"low": 0, "medium": 1, "high": 2, "critical": 3}
+
+_NEGATED_EVAC = re.compile(
+    r"\bno (mandatory |current |new )?evacuation|not (under|being|been) evacuat|no need to evacuat|"
+    r"(isn't|is not|are not|aren't) (under )?(an? )?evacuation|evacuation (orders? )?(has |have |was |were )?"
+    r"(been )?(lifted|cancell?ed|rescinded|ended)|not an evacuation|no evac", re.IGNORECASE)
+_LIFE_SAFETY = re.compile(
+    r"drown|dead bod|bod(y|ies) (was |were |has been |have been )?(found|recovered|pulled|discovered)|"
+    r"\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten|dozens?) (people |persons? |residents? )?"
+    r"(are |were |confirmed |now )?(dead|killed|died|missing|unaccounted)|death toll|confirmed dead|"
+    r"missing (person|man|woman|boy|girl|child|kid|senior|elder)|swept away|washed away (a |the )?(man|woman|car|person)|"
+    r"\btrapped\b|\bstranded\b|stuck on (the |a |their )?roof|on (the |a |their )?roof(top)? waiting|"
+    r"need(s|ed)? (to be )?rescu|can'?t get out|water (is )?(rising|coming) (in|fast|into)|"
+    r"\bsos\b|mayday|found dead|takes? (\w+ )?lives|lives lost|"
+    r"\b(\d+|two|three|four|five|six|seven|eight|nine|ten|many|several) (people |persons? )?"
+    r"(may |might |possibly |reportedly )?(be |have )?(dead|died|deaths?)\b|"
+    r"(kill(s|ed)?|leaves?|claims?) (at least )?(\d+|two|three|four|five|six)\b|"
+    r"\b(a |the )?(second|third|fourth|fifth) (person|victim|death|body)|"
+    r"(leads? to|brings?|caused?) (\w+ )?deaths?|#dead\b|deaths? (in|from) (the )?(\w+ )?flood",
+    re.IGNORECASE)
+# Deaths of animals/pets, or phrases like "death wish" / "bodies of water", aren't life-safety.
+_NOT_HUMAN = re.compile(r"animal|pets?\b|zoo|peacock|fish|dogs?\b|cats?\b|livestock|cattle|horses?|"
+                        r"death wish|bodies of water|body of water|photoshop", re.IGNORECASE)
+_LIFE_SAFETY_NEGATED = re.compile(
+    r"no (one|body|injuries|deaths|reports of (injuries|deaths)) |nobody (was |is )?(hurt|trapped|killed)|"
+    r"no one (was |is )?(hurt|trapped|killed|missing)", re.IGNORECASE)
+_RESCUE_REQUEST = re.compile(
+    r"trapped|stranded|stuck|roof|need(s|ed)? (to be )?rescu|can'?t get out|\bsos\b|send (a )?(boat|help)", re.IGNORECASE)
+_RHETORICAL_HELP = re.compile(
+    r"to the rescue|god,? (please )?help|lord,? help|help us out|please help us (out )?(and|by)|"
+    r"help (us )?pray|pray(ing|ers)? for|thoughts (and|&) prayers", re.IGNORECASE)
+_OFFICIAL_ADVICE = re.compile(r"police|city of|\bcity\b|officials?|stay away|avoid the|closed|advisory|warning", re.IGNORECASE)
+_SUPPLY = re.compile(
+    r"donat|volunteer|blankets?|supplies|sandbag|food bank|drop.?off|clothes|clothing|diapers|"
+    r"red cross|relief fund|fundrais|clean.?up (crew|help|volunteer|effort)|help out|pitch in|"
+    r"shelter (is |now )?open|need(s|ed)? (water|food|help cleaning)", re.IGNORECASE)
+_STREET_SUFFIX = (r"(trail|road|rd|street|st|avenue|ave|drive|dr|boulevard|blvd|way|bridge|"
+                  r"crescent|cres|highway|hwy|parkway|lane)")
+
+
+def _set_severity(result: Dict, sev: str, only_up: bool):
+    cur = result.get("severity")
+    if only_up and cur and _SEV_RANK.get(cur, 0) >= _SEV_RANK[sev]:
+        return
+    result["severity"] = sev
+
+
+def _apply_safety_rules(result: Dict, text: str):
+    text = text or ""
+    life = (bool(_LIFE_SAFETY.search(text)) and not _LIFE_SAFETY_NEGATED.search(text)
+            and not _NOT_HUMAN.search(text))
+
+    # 1. Negation: "we have no evacuation order" is an update, not an evacuation.
+    if _NEGATED_EVAC.search(text) and result["category"] == "evacuation":
+        result["category"] = "weather_water_levels"
+        if not life:
+            _set_severity(result, "low", only_up=False)
+
+    # 2. Figures of speech: "to the rescue", "God please help us" aren't rescue calls.
+    if result["category"] == "rescue_help" and not _RESCUE_REQUEST.search(text) and not life:
+        if _RHETORICAL_HELP.search(text) or not re.search(r"\bhelp\b|rescu", text, re.IGNORECASE):
+            result["category"] = ("weather_water_levels" if _OFFICIAL_ADVICE.search(text)
+                                  else "sympathy_support")
+            _set_severity(result, "low", only_up=False)
+
+    # 3. Life-safety override: deaths, drownings, missing or trapped people -> critical.
+    if life:
+        _set_severity(result, "critical", only_up=True)
+        if _RESCUE_REQUEST.search(text) and result["category"] not in ("evacuation",):
+            result["category"] = "rescue_help"
+
+    # 4. Actionable logistics: donation / volunteer / supply posts get their own category.
+    if (not life and _SUPPLY.search(text)
+            and result["category"] in ("weather_water_levels", "other_related", "sympathy_support")):
+        result["category"] = "donations_volunteering"
+
+    # 5. "Edmonton Trail" is a Calgary street, not the city of Edmonton: keep street names
+    #    whole, but only with a clear street signal (capitalised suffix, house number or
+    #    quadrant) so "Edmonton trail rebuilding along the river #yeg" still means Edmonton.
+    fixed = []
+    for loc in result.get("locations") or []:
+        head = loc.split(",")[0].strip()
+        m = re.search(rf"(\d+\s+)?\b{re.escape(head)}\s+(?P<suf>{_STREET_SUFFIX})\b\.?"
+                      rf"(?P<quad>\s+(NE|NW|SE|SW)\b)?", text, re.IGNORECASE)
+        if m and (m.group("suf")[0].isupper() or m.group(1) or m.group("quad")):
+            fixed.append(f"{head} {m.group('suf')}{m.group('quad') or ''}")
+        else:
+            fixed.append(loc)
+    result["locations"] = list(dict.fromkeys(fixed))
 
 
 def _nlp(text: str) -> Dict:
