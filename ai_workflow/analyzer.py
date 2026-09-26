@@ -61,35 +61,59 @@ NON_RELEVANT_PATTERNS = [
 ]
 
 KNOWN_LOCATIONS_REGEX = [
-    # Canadian Disaster Locations (with city & province)
-    (r'\b(calgary|yyc)\b', 'Calgary, Alberta', 0.9),
-    (r'\b(high river)\b', 'High River, Alberta', 0.9),
-    (r'\b(fort mcmurray|fort mac)\b', 'Fort McMurray, Alberta', 0.9),
-    (r'\b(canmore)\b', 'Canmore, Alberta', 0.9),
-    (r'\b(lethbridge)\b', 'Lethbridge, Alberta', 0.9),
-    (r'\b(medicine hat)\b', 'Medicine Hat, Alberta', 0.9),
-    (r'\b(edmonton|yeg)\b', 'Edmonton, Alberta', 0.9),
-    (r'\b(banff)\b', 'Banff, Alberta', 0.9),
-    (r'\b(okotoks)\b', 'Okotoks, Alberta', 0.9),
-    (r'\b(bragg creek)\b', 'Bragg Creek, Alberta', 0.9),
-    (r'\b(cochrane)\b', 'Cochrane, Alberta', 0.9),
-    (r'\b(thunder bay)\b', 'Thunder Bay, Ontario', 0.9),
-    (r'\b(pickle lake)\b', 'Pickle Lake, Ontario', 0.9),
-    (r'\b(kashechewan)\b', 'Kashechewan, Ontario', 0.9),
-    (r'\b(red earth cree)\b', 'Red Earth Cree, Saskatchewan', 0.9),
-    (r'\b(peguis)\b', 'Peguis, Manitoba', 0.9),
-    (r'\b(siska)\b', 'Siska, British Columbia', 0.9),
-    (r'\b(selkirk)\b', 'Selkirk, Manitoba', 0.9),
-    (r'\b(millennium park)\b', 'Millennium Park, Calgary, Alberta', 0.85),
-    (r'\b(elbow river)\b', 'Elbow River, Calgary, Alberta', 0.85),
-    (r'\b(bow river)\b', 'Bow River, Calgary, Alberta', 0.85),
-    (r'\b(bowness)\b', 'Bowness, Calgary, Alberta', 0.85),
-    (r'\b(sunnyside)\b', 'Sunnyside, Calgary, Alberta', 0.85),
-    (r'\b(bridgeland)\b', 'Bridgeland, Calgary, Alberta', 0.85),
-    (r'\b(inglewood)\b', 'Inglewood, Calgary, Alberta', 0.85),
-    (r'\b(mission)\b', 'Mission, Calgary, Alberta', 0.8),
-    (r'\b(victoria park)\b', 'Victoria Park, Calgary, Alberta', 0.85),
-    (r'\b(saddledome)\b', 'Saddledome, Calgary, Alberta', 0.85),
+    # Canadian Specific Neighborhoods & Landmarks
+    (r'\b(saddledome|scotiabank saddledome|flames rink)\b', 'Scotiabank Saddledome, Calgary, AB', 0.95),
+    (r'\b(calgary zoo|zoo)\b', 'Calgary Zoo, Calgary, AB', 0.95),
+    (r'\b(stampede grounds|stampede park|stampede parade|stampede)\b', 'Stampede Grounds, Calgary, AB', 0.95),
+    (r'\b(bow valley college)\b', 'Bow Valley College, Calgary, AB', 0.95),
+    (r'\b(kensington)\b', 'Kensington, Calgary, AB', 0.95),
+    (r'\b(downtown calgary|downtown yyc|downtown)\b', 'Downtown Calgary, AB', 0.90),
+    (r'\b(deerfoot trail|deerfoot)\b', 'Deerfoot Trail, Calgary, AB', 0.95),
+    (r'\b(macleod trail|macleod)\b', 'Macleod Trail, Calgary, AB', 0.95),
+    (r'\b(glenmore reservoir|glenmore)\b', 'Glenmore Reservoir, Calgary, AB', 0.95),
+    (r'\b(heritage park)\b', 'Heritage Park, Calgary, AB', 0.95),
+    (r'\b(chinatown)\b', 'Chinatown, Calgary, AB', 0.95),
+    (r'\b(roxboro)\b', 'Roxboro, Calgary, AB', 0.95),
+    (r'\b(rideau)\b', 'Rideau, Calgary, AB', 0.95),
+    (r'\b(erlton)\b', 'Erlton, Calgary, AB', 0.95),
+    (r'\b(ramsay)\b', 'Ramsay, Calgary, AB', 0.95),
+    (r'\b(mount royal)\b', 'Mount Royal, Calgary, AB', 0.95),
+    (r'\b(prince\'s island|princes island)\b', 'Prince\'s Island Park, Calgary, AB', 0.95),
+    (r'\b(peace bridge)\b', 'Peace Bridge, Calgary, AB', 0.95),
+    (r'\b(centre street|center street)\b', 'Centre Street, Calgary, AB', 0.90),
+    (r'\b(memorial drive)\b', 'Memorial Drive, Calgary, AB', 0.90),
+    (r'\b(crowchild trail|crowchild)\b', 'Crowchild Trail, Calgary, AB', 0.95),
+    (r'\b(beltline)\b', 'Beltline, Calgary, AB', 0.95),
+    (r'\b(millennium park)\b', 'Millennium Park, Calgary, AB', 0.90),
+    (r'\b(elbow river)\b', 'Elbow River, Calgary, AB', 0.90),
+    (r'\b(bow river)\b', 'Bow River, Calgary, AB', 0.90),
+    (r'\b(bowness)\b', 'Bowness, Calgary, AB', 0.90),
+    (r'\b(sunnyside)\b', 'Sunnyside, Calgary, AB', 0.90),
+    (r'\b(bridgeland)\b', 'Bridgeland, Calgary, AB', 0.90),
+    (r'\b(inglewood)\b', 'Inglewood, Calgary, AB', 0.90),
+    (r'\b(mission)\b', 'Mission, Calgary, AB', 0.85),
+    (r'\b(cliff bungalow)\b', 'Cliff Bungalow, Calgary, AB', 0.90),
+    (r'\b(victoria park)\b', 'Victoria Park, Calgary, AB', 0.90),
+    (r'\b(high river)\b', 'High River, Alberta', 0.90),
+    (r'\b(fort mcmurray|fort mac)\b', 'Fort McMurray, Alberta', 0.90),
+    (r'\b(canmore)\b', 'Canmore, Alberta', 0.90),
+    (r'\b(lethbridge)\b', 'Lethbridge, Alberta', 0.90),
+    (r'\b(medicine hat)\b', 'Medicine Hat, Alberta', 0.90),
+    (r'\b(edmonton|yeg)\b', 'Edmonton, Alberta', 0.85),
+    (r'\b(banff)\b', 'Banff, Alberta', 0.90),
+    (r'\b(okotoks)\b', 'Okotoks, Alberta', 0.90),
+    (r'\b(bragg creek)\b', 'Bragg Creek, Alberta', 0.90),
+    (r'\b(cochrane)\b', 'Cochrane, Alberta', 0.90),
+    (r'\b(thunder bay)\b', 'Thunder Bay, Ontario', 0.90),
+    (r'\b(pickle lake)\b', 'Pickle Lake, Ontario', 0.90),
+    (r'\b(kashechewan)\b', 'Kashechewan, Ontario', 0.90),
+    (r'\b(red earth cree)\b', 'Red Earth Cree, Saskatchewan', 0.90),
+    (r'\b(peguis)\b', 'Peguis, Manitoba', 0.90),
+    (r'\b(siska)\b', 'Siska, British Columbia', 0.90),
+    (r'\b(selkirk)\b', 'Selkirk, Manitoba', 0.90),
+    
+    # Generic City Fallback
+    (r'\b(calgary|yyc)\b', 'Calgary, AB, Canada', 0.75),
     
     # International Locations (with city & country)
     (r'\b(tacloban)\b', 'Tacloban, Philippines', 0.95),
@@ -121,7 +145,7 @@ JUNK_LOCATION_WORDS = {
     'saturday', 'sunday', 'january', 'february', 'march', 'april', 'may', 'june',
     'july', 'august', 'september', 'october', 'november', 'december', 'photo',
     'video', 'pics', 'image', 'water', 'flood', 'floods', 'flooding', 'evacuation',
-    'downtown', 'here', 'there', 'somewhere', 'everywhere', 'nowhere'
+    'here', 'there', 'somewhere', 'everywhere', 'nowhere'
 }
 
 
@@ -175,6 +199,12 @@ def analyze_tweet_nlp(tweet_text: str) -> Dict[str, Any]:
                     "raw_text": place_name,
                     "location_confidence": loc_conf
                 })
+
+    # Filter out generic city centroids if a specific landmark/neighborhood was extracted
+    generic_cities = {'calgary, ab, canada', 'calgary, alberta', 'edmonton, alberta', 'alberta, canada'}
+    has_specific = any(loc["raw_text"].lower() not in generic_cities for loc in extracted_locations)
+    if has_specific:
+        extracted_locations = [loc for loc in extracted_locations if loc["raw_text"].lower() not in generic_cities]
 
     # Regex for "City, Country" or "City, Province/State, Country" explicitly in text
     formatted_place_matches = re.findall(r'\b([A-Z][a-zA-Z\s]+,\s*[A-Z][a-zA-Z\s]+(?:\s*,\s*[A-Z][a-zA-Z\s]+)?)\b', text)
@@ -403,6 +433,6 @@ def analyze_tweet(tweet_text: str, geocode: bool = True) -> Dict[str, Any]:
                 formatted_locs.append(l)
             elif isinstance(l, str):
                 formatted_locs.append({"raw_text": l, "location_confidence": 0.85})
-        result["locations"] = resolve_locations(formatted_locs)
+        result["locations"] = resolve_locations(formatted_locs, tweet_text=tweet_text)
 
     return result
