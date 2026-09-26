@@ -202,10 +202,11 @@ def _geocode_all(job_id: str, ds: Dict, scope: str, max_lookups: int):
     points = [(t["lat"], t["lon"], 1) for t in tweets
               if t.get("lat") is not None and t.get("lon") is not None]
     remaining = []
+    gaz_hits: Dict[str, Dict] = {}  # applied once the scope is known (see below)
     for n in names:
         hit = geocode.lookup_gazetteer(n)
         if hit:
-            step(n, hit)
+            gaz_hits[n] = hit
             points.append((hit["lat"], hit["lon"], len(by_name[n])))
         elif geocode.worth_looking_up(n):
             remaining.append(n)
@@ -234,6 +235,8 @@ def _geocode_all(job_id: str, ds: Dict, scope: str, max_lookups: int):
 
     if scope == "world":
         ds["anchor"] = None
+        for n, hit in gaz_hits.items():
+            step(n, hit)
         for n in remaining:
             hit = probe_hits[n] if n in probe_hits else lookup(n, None, country_first=False)
             step(n, hit)
@@ -253,6 +256,14 @@ def _geocode_all(job_id: str, ds: Dict, scope: str, max_lookups: int):
     if anchor is None:
         anchor = geocode.weighted_anchor(points)
     ds["anchor"] = anchor
+    # Gazetteer entries far from this disaster are a different place with the same name
+    # ("Queensland" Liquor in Calgary is not Queensland, Australia): look those up
+    # again inside the region instead.
+    for n, hit in gaz_hits.items():
+        if anchor is None or geocode.in_region(hit, anchor):
+            step(n, hit)
+        else:
+            queue.append(n)
     for n in queue:
         step(n, lookup(n, anchor, country_first=True))
 
