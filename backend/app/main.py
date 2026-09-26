@@ -282,9 +282,14 @@ def get_geojson(
             "properties": {"tweet_id": t["id"], "text": t["text"], "category": t["category"],
                            "severity": t.get("severity"), "confidence": t["confidence"],
                            "disaster_type": t.get("disaster_type"),
-                           "place": loc["name"], "created_at": t["created_at"], "ts": t.get("ts")},
+                           "place": loc["name"], "created_at": t["created_at"], "ts": t.get("ts"),
+                           # city = only the town was named (draw as an area, not a precise pin)
+                           "precision": loc.get("precision", "local"),
+                           # tweets naming several places: weights sum to 1 per tweet (heatmaps)
+                           "weight": round(1 / len(t["locations"]), 3),
+                           "primary": i == 0},
         }
-        for t in rows for loc in t["locations"]
+        for t in rows for i, loc in enumerate(t["locations"])
     ]
     return {"type": "FeatureCollection", "features": features}
 
