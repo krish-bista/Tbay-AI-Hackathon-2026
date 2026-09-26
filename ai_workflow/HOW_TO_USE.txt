@@ -224,3 +224,8 @@ main before changing these files, and keep the names listed in 6.2 stable.
     {id, is_relevant, relevance_confidence, category, severity, disaster_type, locations: [str], reasoning}.
   - Locations: specific places, city/province/country added when clear
     ("Mission, Calgary, Alberta", "Tacloban, Philippines"). No bare provinces or countries.
+
+6.5 AI Team Contributions Status
+  - I have pushed my AI workflow contributions to main. All flood relevance rules,
+    disaster_type enum classification, expanded landmark gazetteers, and deterministic
+    city centroid jittering are finalized and pushed.

@@ -4902,6 +4902,16 @@
 "portable toilets being set up in bowness, sunnyside|51.0,-114.1": [],
 "possible flood relief scams|51.0,-114.1": [],
 "premier thanks westpac, qantas and bank of queensland for giving or pledgding|any": [],
+"prince's island park, calgary|51.0,-114.1": [
+{
+"cat": "leisure",
+"lat": 51.0551846,
+"lon": -114.0706486,
+"n": "Prince's Island Park",
+"name": "Prince's Island Park, Eau Claire, Calgary",
+"rank": 24
+}
+],
 "prince|51.0,-114.1": [
 {
 "cat": "boundary",
