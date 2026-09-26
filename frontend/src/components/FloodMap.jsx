@@ -4,10 +4,17 @@ import {
   MapContainer,
   TileLayer,
   CircleMarker,
-  Popup,
   useMap,
 } from 'react-leaflet';
+import 'leaflet.markercluster';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { getMarkerColor, getCategoryBadge, getCategoryDisplay } from '../utils/categories';
+
+// Ensure L is on window for leaflet plugins if needed
+if (typeof window !== 'undefined' && !window.L) {
+  window.L = L;
+}
 
 /** Fly the map to given coords */
 function FlyToHandler({ flyTo }) {
@@ -85,6 +92,102 @@ function FitBoundsToData({ geojson, stats, datasetId }) {
   return null;
 }
 
+/** Smooth Marker Clustering Layer using leaflet.markercluster displaying number count badges */
+function ClusterLayer({ geojson, onSelectLocation }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map) return;
+    if (!geojson?.features || geojson.features.length === 0) return;
+
+    // Create marker cluster group with number count badge
+    const clusterGroup = L.markerClusterGroup({
+      maxClusterRadius: 40,
+      showCoverageOnHover: false,
+      chunkedLoading: true,
+      spiderfyOnMaxZoom: true,
+      iconCreateFunction: (cluster) => {
+        const count = cluster.getChildCount();
+        const display = count > 999 ? `${(count / 1000).toFixed(1)}k` : count;
+        return L.divIcon({
+          html: `<div style="background-color: rgba(24, 24, 27, 0.92); color: #ffffff; width: 32px; height: 32px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 11px; font-weight: 700; border: 2px solid #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.25);">${display}</div>`,
+          className: 'gis-cluster-marker',
+          iconSize: L.point(32, 32),
+        });
+      },
+    });
+
+    geojson.features.forEach((feature) => {
+      if (!feature.geometry?.coordinates) return;
+      const [lng, lat] = feature.geometry.coordinates;
+      if (lat == null || lng == null) return;
+
+      const p = feature.properties || {};
+      const colors = getMarkerColor(p.category);
+      const categoryBadge = getCategoryBadge(p.category);
+      const categoryLabel = getCategoryDisplay(p.category);
+      const severity = p.severity?.toLowerCase();
+      const place = p.place || p.location_name || 'Ground Location';
+
+      // Severity badge colors
+      let sevClass = 'bg-zinc-100 text-zinc-700 border-zinc-200';
+      if (severity === 'critical') sevClass = 'bg-red-950 text-red-200 border-red-800';
+      else if (severity === 'high') sevClass = 'bg-red-100 text-red-800 border-red-300';
+      else if (severity === 'medium') sevClass = 'bg-amber-100 text-amber-800 border-amber-300';
+      else if (severity === 'low') sevClass = 'bg-zinc-100 text-zinc-600 border-zinc-200';
+
+      const marker = L.circleMarker([lat, lng], {
+        radius: 6,
+        fillColor: colors.fill,
+        fillOpacity: 0.9,
+        color: '#ffffff',
+        weight: 1.5,
+        opacity: 1,
+      });
+
+      const popupDiv = document.createElement('div');
+      popupDiv.className = 'space-y-1.5 text-zinc-900 font-sans';
+      popupDiv.innerHTML = `
+        <div class="flex items-center gap-1.5 border-b border-zinc-200 pb-1">
+          <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${colors.fill}"></span>
+          <span class="font-semibold text-xs text-zinc-900">${place}</span>
+        </div>
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="text-[10px] font-mono px-1.5 py-0.2 rounded border ${categoryBadge}">${categoryLabel}</span>
+          ${severity ? `<span class="text-[10px] font-mono uppercase px-1.5 py-0.2 rounded border font-semibold ${sevClass}">${severity}</span>` : ''}
+          ${p.confidence != null ? `<span class="text-[10px] font-mono text-zinc-500">${(p.confidence * 100).toFixed(0)}% conf</span>` : ''}
+        </div>
+        <p class="text-xs text-zinc-700 leading-normal pt-0.5">${p.text || p.tweet_text || ''}</p>
+        <div class="pt-1 border-t border-zinc-100 flex items-center justify-between gap-1 text-[10px] font-mono">
+          <span class="text-zinc-400">${p.created_at ? new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+          <button type="button" class="filter-btn text-zinc-700 hover:text-zinc-900 underline font-medium hover:bg-zinc-100 px-1 py-0.5 rounded cursor-pointer">
+            Filter feed to this location
+          </button>
+        </div>
+      `;
+
+      const btn = popupDiv.querySelector('.filter-btn');
+      if (btn && onSelectLocation) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          onSelectLocation(place);
+        });
+      }
+
+      marker.bindPopup(popupDiv, { maxWidth: 300, minWidth: 220 });
+      clusterGroup.addLayer(marker);
+    });
+
+    map.addLayer(clusterGroup);
+
+    return () => {
+      map.removeLayer(clusterGroup);
+    };
+  }, [geojson, map, onSelectLocation]);
+
+  return null;
+}
+
 /** 100% Free, No-API-Key Light GIS Tile Configurations */
 const MAP_STYLES = {
   osm: {
@@ -124,54 +227,6 @@ export default function FloodMap({
   const isWorld = stats?.scope === 'world';
   const defaultCenter = isWorld ? [20, 0] : (stats?.anchor || [51.05, -114.07]);
   const defaultZoom = isWorld ? 2 : 10;
-
-  // Jitter/offset markers that share identical or nearby coordinates so all dots are visible
-  const displayMarkers = useMemo(() => {
-    const clusters = [];
-    features.forEach((feature, idx) => {
-      if (!feature.geometry?.coordinates) return;
-      const [rawLng, rawLat] = feature.geometry.coordinates;
-      if (rawLat == null || rawLng == null) return;
-
-      let added = false;
-      for (const group of clusters) {
-        const [gLng, gLat] = group.centroid;
-        if (Math.hypot(rawLat - gLat, rawLng - gLng) < 0.015) {
-          group.items.push({ feature, idx, rawLat, rawLng });
-          added = true;
-          break;
-        }
-      }
-      if (!added) {
-        clusters.push({
-          centroid: [rawLng, rawLat],
-          items: [{ feature, idx, rawLat, rawLng }],
-        });
-      }
-    });
-
-    const markers = [];
-    clusters.forEach((group) => {
-      const count = group.items.length;
-      group.items.forEach(({ feature, idx, rawLat, rawLng }, i) => {
-        let lat = rawLat;
-        let lng = rawLng;
-        if (count > 1) {
-          const angle = (i * 2 * Math.PI) / count;
-          lat = rawLat + Math.sin(angle) * 0.008;
-          lng = rawLng + Math.cos(angle) * 0.008;
-        }
-        markers.push({
-          id: feature.properties?.tweet_id ?? `feat-${idx}`,
-          lat,
-          lng,
-          feature,
-        });
-      });
-    });
-
-    return markers;
-  }, [features]);
 
   // Cluster locations for heatmap concentration circles
   const heatmapData = useMemo(() => {
@@ -249,93 +304,8 @@ export default function FloodMap({
             />
           ))}
 
-        {/* Individual Feature Markers with Jittered Dots and Rich Popups */}
-        {displayMarkers.map(({ id, lat, lng, feature }) => {
-          const p = feature.properties || {};
-          const colors = getMarkerColor(p.category);
-          const categoryBadgeClass = getCategoryBadge(p.category);
-          const categoryLabel = getCategoryDisplay(p.category);
-          const severity = p.severity?.toLowerCase();
-          const place = p.place || p.location_name || 'Ground Location';
-
-          let sevClass = 'bg-zinc-100 text-zinc-700 border-zinc-200';
-          if (severity === 'critical') sevClass = 'bg-red-950 text-red-200 border-red-800';
-          else if (severity === 'high') sevClass = 'bg-red-100 text-red-800 border-red-300';
-          else if (severity === 'medium') sevClass = 'bg-amber-100 text-amber-800 border-amber-300';
-          else if (severity === 'low') sevClass = 'bg-zinc-100 text-zinc-600 border-zinc-200';
-
-          return (
-            <CircleMarker
-              key={id}
-              center={[lat, lng]}
-              radius={6.5}
-              pathOptions={{
-                fillColor: colors.fill,
-                fillOpacity: 0.9,
-                color: '#ffffff',
-                weight: 1.5,
-                opacity: 1,
-              }}
-            >
-              <Popup maxWidth={300} minWidth={220}>
-                <div className="space-y-1.5 text-zinc-900 font-sans">
-                  {/* Location Header */}
-                  <div className="flex items-center gap-1.5 border-b border-zinc-200 pb-1">
-                    <span
-                      className="w-2 h-2 rounded-full shrink-0"
-                      style={{ backgroundColor: colors.fill }}
-                    />
-                    <span className="font-semibold text-xs text-zinc-900">
-                      {place}
-                    </span>
-                  </div>
-
-                  {/* Category, Severity & Confidence */}
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${categoryBadgeClass}`}>
-                      {categoryLabel}
-                    </span>
-                    {severity && (
-                      <span className={`text-[10px] font-mono uppercase px-1.5 py-0.2 rounded border font-semibold ${sevClass}`}>
-                        {severity}
-                      </span>
-                    )}
-                    {p.confidence != null && (
-                      <span className="text-[10px] font-mono text-zinc-500">
-                        {(p.confidence * 100).toFixed(0)}% conf
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Tweet Text */}
-                  <p className="text-xs text-zinc-700 leading-normal pt-0.5">
-                    {p.text || p.tweet_text || ''}
-                  </p>
-
-                  {/* Timestamp & Location Filter Action */}
-                  <div className="pt-1 border-t border-zinc-100 flex items-center justify-between gap-1 text-[10px] font-mono">
-                    <span className="text-zinc-400">
-                      {p.created_at
-                        ? new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                        : ''}
-                    </span>
-
-                    {onSelectLocation && (
-                      <button
-                        type="button"
-                        onClick={() => onSelectLocation(place)}
-                        className="text-zinc-700 hover:text-zinc-900 underline font-medium hover:bg-zinc-100 px-1 py-0.5 rounded cursor-pointer"
-                        title="Filter feed to this location"
-                      >
-                        Filter feed to this location
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </Popup>
-            </CircleMarker>
-          );
-        })}
+        {/* Clustered Feature Markers with Number Count Badges */}
+        <ClusterLayer geojson={geojson} onSelectLocation={onSelectLocation} />
       </MapContainer>
     </div>
   );
