@@ -35,17 +35,17 @@ export default function KPIStrip({ total, relevant, noise, withLocation, topLoca
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-zinc-200 bg-white">
       {metrics.map((m) => (
-        <div key={m.label} className="p-2 sm:px-2.5 sm:py-2 flex flex-col justify-between min-w-0">
-          <div className="text-[10px] uppercase tracking-wider text-zinc-500 font-mono font-medium truncate leading-tight">
+        <div key={m.label} className="p-3 sm:px-3.5 sm:py-3 flex flex-col justify-between min-w-0">
+          <div className="text-[11px] sm:text-xs uppercase tracking-wider text-zinc-500 font-mono font-semibold truncate leading-tight">
             {m.label}
           </div>
-          <div className="mt-1 flex flex-col min-w-0">
-            <span className={`text-base sm:text-lg font-bold font-mono tabular-nums ${m.valColor} leading-none`}>
+          <div className="mt-1.5 flex flex-col min-w-0">
+            <span className={`text-xl sm:text-2xl lg:text-[26px] font-bold font-mono tabular-nums ${m.valColor} leading-tight`}>
               {m.value}
             </span>
             {m.sub && (
               <span
-                className="text-[10px] text-zinc-500 font-mono tabular-nums leading-tight mt-0.5 truncate"
+                className="text-[11px] sm:text-xs text-zinc-500 font-mono tabular-nums font-medium leading-tight mt-1 truncate"
                 title={m.label === 'Mapped Ground Points' ? `Top Hotspot: ${m.sub}` : m.sub}
               >
                 {m.sub}

@@ -141,9 +141,9 @@ export default function Header({
               onClick={onExportGeoJSON}
               disabled={!hasData}
               className="px-3 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-              title="Download filtered ground points as GeoJSON for MapAki"
+              title="Download filtered ground points as GeoJSON"
             >
-              Export GeoJSON (MapAki)
+              Export Json
             </button>
           </div>
         </div>
