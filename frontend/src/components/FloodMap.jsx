@@ -320,7 +320,9 @@ export default function FloodMap({
   const currentTileConfig = MAP_STYLES[mapStyle] || MAP_STYLES.osm;
 
   return (
-    <div className="relative w-full h-full rounded border border-zinc-200 overflow-hidden bg-zinc-100">
+    // `isolate` keeps Leaflet's internal z-indexes (400-1000) inside the map, so page overlays
+    // (upload progress, toasts) are drawn above it instead of underneath.
+    <div className="relative isolate w-full h-full rounded border border-zinc-200 overflow-hidden bg-zinc-100">
       {/* Map Style Switcher (Top-Right Corner) - Utilitarian GIS tabs */}
       <div className="absolute top-2.5 right-2.5 z-[1000] flex items-center bg-white/95 backdrop-blur-sm p-0.5 rounded border border-zinc-300 shadow-sm text-[11px] font-mono">
         {Object.values(MAP_STYLES).map((style) => (
