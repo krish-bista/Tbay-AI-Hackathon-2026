@@ -1,14 +1,22 @@
 # ACHELOUS 🌊 — Flood Intelligence From The Ground Up
 
-> **Thunder Bay AI Hackathon 2026**  
-> *Developed for the CE Strategies Disaster Response Challenge & Bonus Challenge*
+<div align="center">
 
-[![React](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite-61dafb?logo=react&logoColor=black)](frontend/)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)](backend/)
-[![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS%20v4-38bdf8?logo=tailwindcss&logoColor=white)](frontend/)
-[![Leaflet](https://img.shields.io/badge/GIS-Leaflet%20%2B%20MarkerCluster-199900?logo=leaflet&logoColor=white)](frontend/)
-[![Gemini](https://img.shields.io/badge/AI-Google%20Gemini%20API-4285f4?logo=google&logoColor=white)](backend/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+### 🏆 1st Place Winner — Thunder Bay AI Hackathon 2026
+**CE Strategies Disaster Response Challenge & Bonus Challenge**
+
+[![Hackathon Winner](https://img.shields.io/badge/🏆%20Hackathon-1st%20Place%20Winner-ffd700?style=for-the-badge&logo=target&logoColor=black)](#readme)
+[![React](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite-61dafb?style=flat-square&logo=react&logoColor=black)](frontend/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](backend/)
+[![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS%20v4-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white)](frontend/)
+[![Leaflet](https://img.shields.io/badge/GIS-Leaflet%20%2B%20MarkerCluster-199900?style=flat-square&logo=leaflet&logoColor=white)](frontend/)
+[![Gemini](https://img.shields.io/badge/AI-Google%20Gemini%20API-4285f4?style=flat-square&logo=google&logoColor=white)](backend/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+
+</div>
+
+> [!TIP]
+> **Winner Announcement**: ACHELOUS was awarded **1st Place** at the Thunder Bay AI Hackathon 2026 for its resilient dual-engine AI pipeline, high-throughput disaster social triage (61,000+ posts processed), and emergency-grade GIS situational command center!
 
 ---
 
@@ -305,11 +313,3 @@ Achelous is configured for zero-friction deployment on Render as a single web se
    - `PYTHON_VERSION`: `3.11.9`
    - `NODE_VERSION`: `22`
    - `HACKATHON_API_KEY`: *(Your Google Gemini API Key)*
-
----
-
-## 👥 Authors & Acknowledgments
-
-- **Team**: Krish Bista & Team
-- **Competition**: Thunder Bay AI Hackathon 2026
-- **Challenge Sponsor**: **CE Strategies** — For providing the disaster response problem specification, guidance, and validation datasets.
