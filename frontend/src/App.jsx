@@ -510,7 +510,7 @@ export default function App() {
 
       {/* Toast */}
       {toastMessage && (
-        <div className="fixed bottom-4 right-4 z-50 animate-fade-in">
+        <div className="fixed bottom-4 right-4 z-[2100] animate-fade-in">
           <div
             className={`px-3 py-2 rounded text-xs font-mono border shadow-md flex items-center gap-2 ${
               toastMessage.type === 'success'
@@ -529,7 +529,7 @@ export default function App() {
 
       {/* Job Progress Overlay (Dismissed immediately once dataset_ready === true) */}
       {jobProgress && jobProgress.status !== 'done' && !jobProgress.dataset_ready && (
-        <div className="fixed inset-0 z-40 bg-zinc-900/40 backdrop-blur-[2px] flex items-center justify-center">
+        <div className="fixed inset-0 z-[2000] bg-zinc-900/40 backdrop-blur-[2px] flex items-center justify-center">
           <div className="bg-white rounded border border-zinc-300 p-6 max-w-sm w-full mx-4 shadow-xl text-center space-y-3">
             <Loader2 className="w-8 h-8 text-zinc-700 animate-spin mx-auto" />
             <h3 className="text-base font-bold text-zinc-900">Processing Dataset Pipeline</h3>
